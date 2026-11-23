@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
  * scripts/prepare-content.mjs
- * 把仓库根的 README.md / _EXPERIMENTS.md / _STYLE-GUIDE.md 与 docs/*.md
+ * 把仓库根的 README.md 与 docs/*.md
  * 拷贝到 site/content/ 并注入 Hugo 需要的 front matter。
  * 原则：只读源文件，绝不修改；所有加工都发生在 site/content/ 的副本上。
- * 用法：node scripts/prepare-content.mjs [--check]
+ * 用法：node scripts/prepare-content.mjs [--check] [--with-appendix]
  */
 import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, dirname, basename } from 'node:path';
@@ -91,10 +91,9 @@ mkdirSync(join(OUT, 'docs'), { recursive: true });
 function linkifyReadme(md) {
   return outsideFences(md, (ln) => {
     let s = ln;
-    s = s.replace(/\]\(_EXPERIMENTS\.md\)/g, '](experiments/)');
-    s = s.replace(/\]\(_STYLE-GUIDE\.md\)/g, '](style-guide/)');
-    s = s.replace(/`_EXPERIMENTS\.md`/g, '[`_EXPERIMENTS.md`](experiments/)');
-    s = s.replace(/`_STYLE-GUIDE\.md`/g, '[`_STYLE-GUIDE.md`](style-guide/)');
+    // 两份附录默认不发布：把指向它们的链接降级为纯文本，避免死链
+    s = s.replace(/\[([^\]]+)\]\(_EXPERIMENTS\.md\)/g, (m, text) => text);
+    s = s.replace(/\[([^\]]+)\]\(_STYLE-GUIDE\.md\)/g, (m, text) => text);
     s = s.replace(/^\|\s*(\d{1,2})\s*\|\s*([^|]+?)\s*\|/, (m, n, cell) => {
       const ch = chapterIndex.get(Number(n));
       if (!ch) return m;
@@ -144,10 +143,12 @@ for (const [num, ch] of chapterIndex) {
 }
 console.log('  OK 正文  <- docs/*.md  ' + chapterIndex.size + ' 章');
 
-const appendices = [
+const WITH_APPENDIX = process.argv.includes('--with-appendix');
+const appendices = WITH_APPENDIX ? [
   { src: '_EXPERIMENTS.md', dst: 'experiments.md', weight: 100, fallback: '四个诊断实验' },
   { src: '_STYLE-GUIDE.md', dst: 'style-guide.md', weight: 200, fallback: '写作规范与纪律' },
-];
+] : [];
+if (!WITH_APPENDIX) console.log('  -- 附录未发布（如需发布：node scripts/prepare-content.mjs --with-appendix）');
 for (const a of appendices) {
   const p = join(ROOT, a.src);
   if (!existsSync(p)) { console.warn('  SKIP（不存在）：' + a.src); continue; }

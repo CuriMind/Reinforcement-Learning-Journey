@@ -1,4 +1,4 @@
-{{/* 侧边栏：目录（首页）→ 正文 34 章（按 weight 排序）→ 附录资料 */}}
+{{/* 侧边栏：目录（首页）→ 正文 34 章（按 weight 排序） */}}
 <nav class="nav">
   <p class="grp">开始</p>
   <ul>
@@ -13,14 +13,4 @@
       {{ end }}
     </ol>
   {{ end }}
-
-  <p class="grp">附录资料</p>
-  <ul>
-    {{ with site.GetPage "/experiments" }}
-      <li><a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} class="on"{{ end }}>{{ .Title }}</a></li>
-    {{ end }}
-    {{ with site.GetPage "/style-guide" }}
-      <li><a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} class="on"{{ end }}>{{ .Title }}</a></li>
-    {{ end }}
-  </ul>
 </nav>
