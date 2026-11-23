@@ -3,7 +3,7 @@
 # scripts/prepare-content.mjs 拷贝并注入 front matter 到 site/content/（构建产物，不入库）。
 # baseURL 由 GitHub Actions 在构建时用 --baseURL 覆盖，本地预览用相对路径即可。
 
-baseURL = "https://example.github.io/reinforcement-learning-journey/"
+baseURL = "baseURL = https://CuriMind.github.io/Reinforcement-Learning-Journey/"
 locale = "zh-cn"          # v0.158+ 的新键（旧名 languageCode 已废弃）
 defaultContentLanguage = "zh"
 title = "强化学习之旅"
