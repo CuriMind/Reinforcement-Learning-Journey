@@ -1,0 +1,4 @@
+{{ define "main" }}
+  {{/* 首页 = 仓库根的 README.md（由 prepare-content 注入 title 后变成 content/_index.md） */}}
+  {{ with .Content }}{{ . }}{{ end }}
+{{ end }}

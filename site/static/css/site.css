@@ -1,0 +1,124 @@
+/* 《强化学习之旅》站点样式：只依赖系统字体，无外部字体请求 */
+:root{
+  --bg:#ffffff; --fg:#1f2328; --muted:#6b7480; --line:#e6e8eb;
+  --accent:#2563eb; --accent-weak:#eff4ff;
+  --code-bg:#f6f8fa; --quote-bg:#f8fafc; --sidebar:#fbfcfd;
+  --maxw:820px; --sbw:288px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans CJK SC","Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+  font-size:16px; line-height:1.85;
+}
+
+/* ── 侧边栏 ───────────────────────────────────────────── */
+.sb{
+  position:fixed; inset:0 auto 0 0; width:var(--sbw);
+  background:var(--sidebar); border-right:1px solid var(--line);
+  padding:22px 18px 40px; overflow-y:auto; font-size:14px;
+}
+.brand{
+  display:block; font-weight:700; font-size:16px; color:var(--fg);
+  text-decoration:none; margin-bottom:18px; letter-spacing:.2px;
+}
+.nav .grp{
+  margin:18px 0 6px; font-size:12px; font-weight:600; letter-spacing:.08em;
+  color:var(--muted); text-transform:uppercase;
+}
+.nav ul,.nav ol{margin:0; padding:0; list-style:none}
+.nav li{margin:1px 0}
+.nav a{
+  display:block; padding:3px 8px; border-radius:6px;
+  color:#3b424b; text-decoration:none; line-height:1.5;
+}
+.nav a:hover{background:var(--accent-weak); color:var(--accent)}
+.nav a.on{background:var(--accent-weak); color:var(--accent); font-weight:600}
+.chapters{counter-reset:c}
+.sb-foot{margin-top:26px; padding-top:14px; border-top:1px solid var(--line); font-size:13px}
+.sb-foot a{color:var(--muted); text-decoration:none}
+.sb-foot a:hover{color:var(--accent)}
+
+/* ── 正文 ─────────────────────────────────────────────── */
+.main{margin-left:var(--sbw); padding:44px 40px 90px}
+.doc{max-width:var(--maxw); margin:0 auto}
+.page-title{
+  margin:0 0 26px; font-size:28px; line-height:1.35; font-weight:700;
+  padding-bottom:14px; border-bottom:2px solid var(--line);
+}
+.doc h2{
+  margin:44px 0 16px; font-size:22px; line-height:1.4; font-weight:700;
+  padding-left:12px; border-left:4px solid var(--accent);
+}
+.doc h3{margin:34px 0 12px; font-size:18px; font-weight:700}
+.doc h4{margin:26px 0 10px; font-size:16px; font-weight:700; color:#333}
+.doc p{margin:14px 0}
+.doc a{color:var(--accent); text-decoration:none; border-bottom:1px solid #c7dbff}
+.doc a:hover{border-bottom-color:var(--accent)}
+.doc strong{font-weight:700}
+.doc hr{border:0; border-top:1px solid var(--line); margin:34px 0}
+
+/* 列表 */
+.doc ul,.doc ol{margin:14px 0; padding-left:24px}
+.doc li{margin:6px 0}
+
+/* 引用块：本书用它承载"本节回答的问题 / 工程提示 / 常见错误" */
+.doc blockquote{
+  margin:18px 0; padding:12px 16px; color:#39414b;
+  background:var(--quote-bg); border-left:4px solid #c8d4e6; border-radius:0 8px 8px 0;
+}
+.doc blockquote p{margin:6px 0}
+
+/* 代码 */
+.doc code{
+  background:var(--code-bg); padding:.15em .35em; border-radius:5px;
+  font-family:"Cascadia Code",Consolas,"SF Mono",Menlo,monospace; font-size:.9em;
+}
+.doc pre{
+  background:var(--code-bg); padding:14px 16px; border-radius:10px;
+  overflow-x:auto; border:1px solid var(--line); line-height:1.6;
+}
+.doc pre code{background:none; padding:0; font-size:13.5px}
+
+/* 表格：宽表横向滚动，不撑破正文 */
+.doc table{
+  border-collapse:collapse; width:100%; margin:18px 0; font-size:14.5px;
+  display:block; overflow-x:auto; white-space:nowrap;
+}
+.doc th,.doc td{border:1px solid var(--line); padding:8px 12px; text-align:left}
+.doc th{background:#f4f6f8; font-weight:600; white-space:nowrap}
+.doc tr:nth-child(even) td{background:#fcfdfe}
+
+/* 数学公式：块级居中、可横向滚动 */
+.doc .katex-display{overflow-x:auto; overflow-y:hidden; padding:6px 0}
+
+/* 上下页 */
+.pager{
+  display:flex; justify-content:space-between; gap:16px;
+  margin-top:60px; padding-top:20px; border-top:1px solid var(--line); font-size:14px;
+}
+.pager a{color:var(--accent); text-decoration:none}
+.pager .next{margin-left:auto; text-align:right}
+
+.cards{margin:20px 0; padding-left:24px}
+
+/* ── 移动端 ───────────────────────────────────────────── */
+.sb-toggle{
+  display:none; position:fixed; top:12px; left:12px; z-index:30;
+  background:#fff; border:1px solid var(--line); border-radius:8px;
+  padding:6px 12px; font-size:14px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,.06);
+}
+@media (max-width:960px){
+  .sb-toggle{display:block}
+  .sb{transform:translateX(-100%); transition:transform .2s ease; z-index:20; width:270px}
+  body.sb-open .sb{transform:none}
+  .main{margin-left:0; padding:64px 18px 70px}
+  .page-title{font-size:23px}
+  .doc h2{font-size:20px}
+}
+
+@media print{
+  .sb,.sb-toggle,.pager{display:none}
+  .main{margin:0; padding:0}
+}

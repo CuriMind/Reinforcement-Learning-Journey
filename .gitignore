@@ -1,0 +1,18 @@
+# ── Hugo 构建产物 ─────────────────────────────────────
+# site/content/ 由 scripts/prepare-content.mjs 从仓库根的 md 生成，不入库
+site/content/
+site/public/
+site/resources/
+.hugo_build.lock
+
+# ── 系统 / 编辑器 ─────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# ── 临时文件 ──────────────────────────────────────────
+*.log
+*.tmp

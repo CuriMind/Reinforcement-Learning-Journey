@@ -1,0 +1,26 @@
+{{/* 侧边栏：目录（首页）→ 正文 34 章（按 weight 排序）→ 附录资料 */}}
+<nav class="nav">
+  <p class="grp">开始</p>
+  <ul>
+    <li><a href="{{ "" | relURL }}"{{ if .IsHome }} class="on"{{ end }}>总目录与课程地图</a></li>
+  </ul>
+
+  {{ with site.GetPage "/docs" }}
+    <p class="grp">正文 · {{ len .Pages }} 章</p>
+    <ol class="chapters">
+      {{ range .Pages.ByWeight }}
+        <li><a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} class="on"{{ end }}>{{ .Title }}</a></li>
+      {{ end }}
+    </ol>
+  {{ end }}
+
+  <p class="grp">附录资料</p>
+  <ul>
+    {{ with site.GetPage "/experiments" }}
+      <li><a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} class="on"{{ end }}>{{ .Title }}</a></li>
+    {{ end }}
+    {{ with site.GetPage "/style-guide" }}
+      <li><a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} class="on"{{ end }}>{{ .Title }}</a></li>
+    {{ end }}
+  </ul>
+</nav>
