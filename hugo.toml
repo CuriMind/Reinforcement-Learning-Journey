@@ -1,0 +1,52 @@
+# Hugo 站点配置（《强化学习之旅》）
+#
+# 内容源就是仓库里的 docs/ 与 README.md —— 它们本身已带 front matter，
+# 由下面的 module.mounts 直接挂载到 content/，不需要任何拷贝或生成步骤。
+# baseURL 由 GitHub Actions 在构建时用 --baseURL 覆盖。
+
+baseURL = "https://example.github.io/reinforcement-learning-journey/"
+locale = "zh-cn"
+defaultContentLanguage = "zh"
+title = "强化学习之旅"
+enableEmoji = true
+
+# 只保留页面与首页，不生成分类页/RSS
+disableKinds = ["taxonomy", "term", "RSS"]
+
+# ── 内容挂载：docs/ 当 /docs/ 分区，README.md 当首页 ──────────
+[module]
+  [[module.mounts]]
+    source = "docs"
+    target = "content/docs"
+  [[module.mounts]]
+    source = "README.md"
+    target = "content/_index.md"
+
+[markup.goldmark.renderer]
+  unsafe = true                # 书里用了 <br>、HTML 注释等原始标记
+
+[markup.goldmark.parser]
+  autoHeadingID = true
+
+[markup.goldmark.extensions]
+  typographer = false          # 关掉智能引号，避免改写公式附近的引号
+
+# 数学公式：$...$ 与 $$...$$ 原样透传给浏览器端 KaTeX
+[markup.goldmark.extensions.passthrough]
+  enable = true
+  [markup.goldmark.extensions.passthrough.delimiters]
+    block = [['$$', '$$'], ['\[', '\]']]
+    inline = [['$', '$'], ['\(', '\)']]
+
+[markup.highlight]
+  style = "github"
+  noClasses = true
+
+[params]
+  description = "从贝尔曼方程到 Agentic RL 的 34 章教材"
+  repoURL = "https://github.com/CuriMind/Reinforcement-Learning-Journey"
+
+[outputs]
+  home = ["HTML"]
+  section = ["HTML"]
+  page = ["HTML"]

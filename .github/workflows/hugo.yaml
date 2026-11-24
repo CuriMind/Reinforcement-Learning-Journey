@@ -19,23 +19,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # 必须 >= 0.158：site/hugo.toml 用了新键 locale（旧的 languageCode 已废弃）
+      # 必须 >= 0.158：hugo.toml 用了新键 locale（旧的 languageCode 已废弃）
       HUGO_VERSION: 0.170.0
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      # 本仓库的站点内容不在仓库里，而是由脚本从 README.md 与 docs/*.md 生成。
-      # 必须先跑 Node 脚本，否则 site/content 为空、Hugo 只能构建出空站点。
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Generate site content from markdown
-        run: node scripts/prepare-content.mjs
 
       - name: Install Hugo CLI
         uses: peaceiris/actions-hugo@v3
@@ -47,20 +37,17 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
-      # 注意 --source site：站点配置与内容都在 site/ 子目录，不以仓库根为站点根
+      # docs/ 与 README.md 已自带 front matter，由 hugo.toml 的 module.mounts 直接挂载
       - name: Build with Hugo
         env:
           HUGO_ENVIRONMENT: production
         run: |
-          hugo --source site \
-               --destination public \
-               --minify \
-               --baseURL "${{ steps.pages.outputs.base_url }}/"
+          hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site/public
+          path: public
 
   deploy:
     environment:
