@@ -1,6 +1,7 @@
-中文
-
 # 强化学习之旅 · Reinforcement Learning Journey
+
+> 📖 **在线阅读**：[curimind.github.io/Reinforcement-Learning-Journey](https://curimind.github.io/Reinforcement-Learning-Journey/)
+> 带侧边栏目录、公式排版与「上一章 / 下一章」跳转，比在 GitHub 上逐文件翻更顺；仓库里的 md 仍是唯一源文件。
 
 > 从贝尔曼方程到 Agentic RL 的一条连续路径。模块〇 + 7 个正规模块 / 34 章（含第 0 章），每章标注**证据强度**与**边界**；核心路径 12 章约 70 小时（**仅阅读与手推，不含实验**）；四个诊断实验 E1–E4 另计 **20–27 小时**；全量约 200 小时（含实验）。
 
